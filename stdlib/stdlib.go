@@ -451,6 +451,14 @@ func templates(api *confluence.API) (*template.Template, error) {
 			`<ac:parameter ac:name="autoplay">{{ or .AutoPlay "false"}}</ac:parameter>`,
 			`</ac:structured-macro>`,
 		),
+		`ac:view-file`: text(
+			`<ac:structured-macro ac:name="view-file">`,
+			`<ac:parameter ac:name="name">`,
+			`<ri:attachment ri:filename="{{ .Name | convertAttachment }}"/>`,
+			`</ac:parameter>`,
+			`<ac:parameter ac:name="height">{{ or .Height 250 }}</ac:parameter>`,
+			`</ac:structured-macro>`,
+		),
 
 		// TODO(seletskiy): more templates here
 	} {
