@@ -2,6 +2,7 @@ package renderer
 
 import (
 	"bytes"
+	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -43,6 +44,16 @@ func (r *ConfluenceImageRenderer) renderImage(writer util.BufWriter, source []by
 		return ast.WalkContinue, nil
 	}
 	n := node.(*ast.Image)
+	width := ""
+	height := ""
+
+	if val, _ := n.Attribute([]byte("width")); val != nil {
+		width = fmt.Sprint(val)
+	}
+
+	if val, _ := n.Attribute([]byte("height")); val != nil {
+		height = fmt.Sprint(val)
+	}
 
 	attachments, err := attachment.ResolveLocalAttachments(vfs.LocalOS, filepath.Dir(r.Path), []string{string(n.Destination)})
 
@@ -62,8 +73,8 @@ func (r *ConfluenceImageRenderer) renderImage(writer util.BufWriter, source []by
 				Attachment string
 				Url        string
 			}{
-				"",
-				"",
+				width,
+				height,
 				string(n.Title),
 				string(nodeToHTMLText(n, source)),
 				"",
@@ -85,8 +96,8 @@ func (r *ConfluenceImageRenderer) renderImage(writer util.BufWriter, source []by
 				Attachment string
 				Url        string
 			}{
-				"",
-				"",
+				width,
+				height,
 				string(n.Title),
 				string(nodeToHTMLText(n, source)),
 				attachments[0].Filename,

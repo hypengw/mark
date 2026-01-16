@@ -25,6 +25,8 @@ require (
 	oss.terrastruct.com/util-go v0.0.0-20250213174338-243d8661088a
 )
 
+replace github.com/yuin/goldmark => github.com/hypengw/goldmark v0.0.0-20260116015759-1474fbd95a2a
+
 require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/PuerkitoBio/goquery v1.10.0 // indirect
